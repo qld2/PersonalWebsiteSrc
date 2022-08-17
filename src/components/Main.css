@@ -1,5 +1,10 @@
 .Main {
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     background-color:dimgrey;
+}
+
+.Video {
+    width: 100vw;
 }
