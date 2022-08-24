@@ -1,0 +1,49 @@
+.MenuBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 2;
+    background-color:rgba(105, 105, 105, 0.3);
+    /* background-color:#ff0000; */
+    transition: width 0.3s cubic-bezier(0.2, 0, 0, 1) 0s;
+}
+
+.MenuBarIconHolder {
+}
+
+.MenuBarBottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.Menu {
+    flex: 1;
+}
+
+.MenuBarIcon {
+    margin: 20px;
+    flex: 1;
+    transition: font-size 0.3s cubic-bezier(0.2, 0, 0, 1) 0s;
+}
+
+.Links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.Link {
+    margin: 8px;
+    transition: font-size 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
+}
+
+.Button {
+    width: 100%;
+    transition: font-size 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
+}

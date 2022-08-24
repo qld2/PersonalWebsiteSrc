@@ -3,8 +3,44 @@
     height: 100vh;
     overflow: hidden;
     background-color:dimgrey;
+    display: flex;
+}
+
+.Header {
+    background-color: gray;
+}
+
+.Background {
+    background-color: rgb(71, 71, 71);
+    position: fixed;
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
 }
 
 .Video {
-    width: 100vw;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.OverVideo {
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+}
+
+.Card {
+    background-color: rgba(126, 29, 29, 0.6);
+    min-width: 90%;
+    min-height: 80%;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+}
+
+.Menu {
+    width: 20%;
 }
