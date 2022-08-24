@@ -51,11 +51,30 @@ const config: webpack.Configuration = {
             }
           },
         }]
+      },{
+        test: /\.mp4$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader',
+          },
+          {
+            loader: '@svgr/webpack',
+            options: {
+              babel: false,
+              icon: true,
+            },
+          },
+        ],
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".mp4", ".svg"],
+    modules: [path.resolve(__dirname, "./src/"), "node_modules"]
   },
   plugins: [
     new HtmlWebpackPlugin({

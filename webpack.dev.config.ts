@@ -57,9 +57,6 @@ const config: Configuration = {
           options: {
             lessOptions: {
               javascriptEnabled: true,
-              modifyVars: {
-                'primary-color': '#ff0000',
-              },
             }
           },
         }]
