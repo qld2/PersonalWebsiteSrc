@@ -5,3 +5,9 @@ declare module "*.svg" {
 }
 
 declare module "*.mp4";
+declare module "*.jpeg";
+declare module "*.png";
+declare module "*.txt";
+declare module "*.pdf";
+
+declare module 'pdfjs-dist/build/pdf.worker.entry';

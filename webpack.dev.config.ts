@@ -15,7 +15,7 @@ const config: Configuration = {
   output: {
     publicPath: "/",
   },
-  entry: "./src/index.tsx",
+  entry: ["./src/index.tsx"],
   module: {
     rules: [
       {
@@ -60,9 +60,20 @@ const config: Configuration = {
             }
           },
         }]
-      },{
-        test: /\.mp4$/,
-        use: 'file-loader?name=videos/[name].[ext]',
+      }, 
+      {
+        test: /\.(txt)$/,
+        use: 'raw-loader',
+      }, 
+      {
+        test: /\.pdf$/,
+        // type: 'asset/resource',
+        // use: 'url-loader',
+        use: 'file-loader?name=documents/[name].[ext]',
+      }, 
+      {
+        test: /\.(png|jpeg)$/,
+        use: 'file-loader?name=images/[name].[ext]',
       },
       {
         test: /\.svg$/,
@@ -78,7 +89,11 @@ const config: Configuration = {
             },
           },
         ],
-      },      
+      }, 
+      {
+        test: /\.mp4$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
     ],
   },
   resolve: {

@@ -33,7 +33,7 @@
 }
 
 .Card {
-    background-color: rgba(126, 29, 29, 0.6);
+    /* background-color: rgba(126, 29, 29, 0.6); */
     min-width: 90%;
     min-height: 80%;
     flex-direction: column;

@@ -51,7 +51,22 @@ const config: webpack.Configuration = {
             }
           },
         }]
-      },{
+      }, 
+      {
+        test: /\.(txt)$/,
+        use: 'raw-loader',
+      }, 
+      {
+        test: /\.pdf$/,
+        // type: 'asset/resource',
+        // use: 'url-loader',
+        use: 'file-loader?name=documents/[name].[ext]',
+      }, 
+      {
+        test: /\.(png|jpeg)$/,
+        use: 'file-loader?name=images/[name].[ext]',
+      },
+      {
         test: /\.mp4$/,
         use: 'file-loader?name=videos/[name].[ext]',
       },

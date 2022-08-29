@@ -1,0 +1,18 @@
+.Broadcast {
+    height: 90px;
+    background-color:rgba(105, 105, 105, 0.3);
+    border-style: solid;
+    border-left: 2px;
+    border-color: #001529;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.BroadcastMessage {
+    width:max-content;
+    height: 90px;
+    font-size: 5em;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(0,255,0);
+    /* text-orientation: ; */
+}

@@ -20,6 +20,19 @@
     height: 100%;
 }
 
+.MenuBarMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MenuBarDivider{
+    background-color: #001529;
+    width: 80%;
+    height: 2px;
+    margin: 6px;
+}
+
 .Menu {
     flex: 1;
 }
@@ -32,15 +45,28 @@
 
 .Links {
     width: 100%;
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
 }
 
-.Link {
-    margin: 8px;
-    transition: font-size 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
+.MenuBarLink {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+}
+
+.MenuBarLinkText {
+    font-size: 16px;
+    font-weight: bold;
+    color: #001529;
+    transition: display 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
 }
 
 .Button {
