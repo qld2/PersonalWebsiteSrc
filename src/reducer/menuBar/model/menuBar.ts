@@ -1,3 +1,4 @@
 export type MetaMenuBar = {
-    width: number
+    collapsed: boolean,
+    desireCollapsed: boolean,
 }

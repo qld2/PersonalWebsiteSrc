@@ -1,0 +1,7 @@
+.IdPicture {
+    height: fit-content;
+    background-color: #001529;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}

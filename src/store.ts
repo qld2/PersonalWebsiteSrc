@@ -1,36 +1,23 @@
-import { applyMiddleware, compose, createStore } from 'redux';
-import { loadUser } from 'redux-oidc';
+import { configureStore } from '@reduxjs/toolkit';
+import { connectRouter } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
-import { routerMiddleware } from 'connected-react-router';
-import { composeWithDevTools } from '@reduxjs/toolkit/dist/devtoolsExtension';
+
 import createRootReducer from './reducer';
-import userManager from './util/userManager';
+import appletReducer from './reducer/applet/appletSlice';
+import menuBarReducer from './reducer/menuBar/menuBarSlice';
+import blogReducer from './reducer/blog/blogSlice';
 
 export const history = createBrowserHistory();
 
-/* eslint-disable no-underscore-dangle */
-export default function configureStore(preloadedState: any) {
-  const store = createStore(
-    createRootReducer(history), // root reducer with router state
-    // preloadedState,
-    compose(
-      // (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
-      applyMiddleware(
-        routerMiddleware(history), // for dispatching history actions
-        // ... other middlewares ...
-      ),
-    ),
-  );
+const store = configureStore({
+  reducer: {
+    router: connectRouter(history),
+    applet: appletReducer,
+    menuBar: menuBarReducer,
+    blog: blogReducer,
+  },
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  devTools: process.env.NODE_ENV !== 'production',
+});
 
-  return store;
-}
-/* eslint-enable */
-
-// /* eslint-disable no-underscore-dangle */
-// export const store = createStore(
-//   createRootReducer(history),
-//   (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__(),
-// );
-// /* eslint-enable */
-
-// loadUser(store, userManager);
+export default store;

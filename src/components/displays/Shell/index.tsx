@@ -11,15 +11,19 @@ import { AppState, AppDispatch } from 'src/Root';
 import Handle from 'components/containers/Handle';
 import cmdIcon from './cmdIcon.png';
 import xIcon from './xIcon.png';
+import { Point } from '../../../util/lerp';
 
 type Props = {
   className?: string;
   style?: React.CSSProperties;
 
-  width: string | number;
-  height: string | number;
-  initialTop: number;
-  initialLeft: number;
+  aspectRatio: number;
+  scaleMultiplier: number;
+  fontScaleMultiplier: number;
+
+  initialPos: Point;
+  // initialTop: number;
+  // initialLeft: number;
 
   commandName?: string;
   messages?: string[];
@@ -42,12 +46,10 @@ class Shell extends React.Component<Props, State> {
   constructor(props : Props) {
     super(props);
 
-    const { initialLeft, initialTop } = this.props;
-
     this.state = {
       counter: 0,
-      xOffset: initialLeft,
-      yOffset: initialTop,
+      xOffset: 0,
+      yOffset: 0,
     };
   }
 
@@ -65,32 +67,39 @@ class Shell extends React.Component<Props, State> {
   getAnimation = (params: { text: string, speed?: number, callback?: boolean }
   = { text: '', speed: 60, callback: false }) => {
     const { counter } = this.state;
-    const { finishedCallback } = this.props;
+    const { finishedCallback, fontScaleMultiplier } = this.props;
+
+    const fontSize = 25 * fontScaleMultiplier;
 
     return (
-      <TypeAnimation
-        sequence={[
-          params.text,
-          500,
-          () => {
-            this.setState({
-              counter: counter + 1,
-            });
+      <div style={{ fontSize, fontFamily: 'Courier New', color: 'rgb(0, 255, 0)' }}>
+        <TypeAnimation
+          sequence={[
+            params.text,
+            500,
+            () => {
+              this.setState({
+                counter: counter + 1,
+              });
 
-            if (params.callback && finishedCallback) finishedCallback();
-          },
-        ]}
-        cursor={false}
-        style={{ fontSize: '2em', fontFamily: 'Courier New', color: 'rgb(0, 255, 0)' }}
-        // className="ShellPrompt"
-        speed={params.speed as Speed}
-      />
+              if (params.callback && finishedCallback) finishedCallback();
+            },
+          ]}
+          cursor={false}
+          speed={params.speed as Speed}
+        />
+      </div>
+
     );
   };
 
   getAllAnimations = (): JSX.Element[] => {
     const { counter } = this.state;
-    const { messages, commandName, active } = this.props;
+    const {
+      messages, commandName, active, fontScaleMultiplier,
+    } = this.props;
+
+    const fontSize = 25 * fontScaleMultiplier;
 
     if (!messages) return ([<div />]);
 
@@ -98,8 +107,8 @@ class Shell extends React.Component<Props, State> {
 
     if (commandName) {
       result.push(
-        <div className="ShellCommand">
-          <div className="ShellPrompt">root@PC:~$</div>
+        <div className="ShellCommand" style={{ fontSize }}>
+          <div className="ShellPrompt" style={{ fontSize }}>root@PC:~$</div>
           {active ? this.getAnimation({ text: `./${commandName}`, speed: 30 }) : <div />}
         </div>,
         <p />,
@@ -117,12 +126,32 @@ class Shell extends React.Component<Props, State> {
     return result;
   };
 
-  render(): React.ReactNode {
+  getDimensions = ():{ width: number, height: number } => {
     const {
-      width, height,
+      aspectRatio, scaleMultiplier,
     } = this.props;
 
+    const area = 200000 * scaleMultiplier * scaleMultiplier;
+
+    const width = Math.sqrt(area / aspectRatio);
+    const height = aspectRatio * width;
+
+    return { width, height };
+  };
+
+  render(): React.ReactNode {
+    const {
+      aspectRatio, scaleMultiplier,
+    } = this.props;
+
+    const { initialPos } = this.props;
+
     const { xOffset, yOffset } = this.state;
+
+    const { width, height } = this.getDimensions();
+
+    // const height = 400 * scaleMultiplier;
+    // const width = height * aspectRatio;
 
     return (
       <div
@@ -131,8 +160,8 @@ class Shell extends React.Component<Props, State> {
           width,
           height,
           position: 'absolute',
-          left: xOffset,
-          top: yOffset,
+          left: initialPos.x + xOffset,
+          top: initialPos.y + yOffset,
         }}
       >
         <Handle
@@ -145,8 +174,10 @@ class Shell extends React.Component<Props, State> {
           <img className="ShellX" src={xIcon} alt="" height={20} />
         </Handle>
 
-        <div className="ShellText">
-          {this.getAllAnimations()}
+        <div className="ShellWindow">
+          <div className="ShellText">
+            {this.getAllAnimations()}
+          </div>
         </div>
 
       </div>
@@ -155,185 +186,3 @@ class Shell extends React.Component<Props, State> {
 }
 
 export default Shell;
-
-// import React from 'react';
-// import { connect, ConnectedProps } from 'react-redux';
-
-// import 'antd/dist/antd.variable.css';
-// import './Shell.css';
-
-// import { Speed, TypeAnimation } from 'react-type-animation';
-
-// import { AppState, AppDispatch } from 'src/Root';
-
-// import cmdIcon from './cmdIcon.png';
-// import xIcon from './xIcon.png';
-
-// const mapStateToProps = (state: AppState) => ({});
-
-// function mapDispatchToProps(dispatch : AppDispatch) {
-//   return {
-//     dispatch,
-//   };
-// }
-
-// const connector = connect(mapStateToProps, mapDispatchToProps);
-// type PropsFromRedux = ConnectedProps<typeof connector>;
-
-// type Props = PropsFromRedux & {
-//   className?: string;
-//   style?: React.CSSProperties;
-
-//   width: string | number;
-//   height: string | number;
-//   initialTop: number;
-//   initialLeft: number;
-
-//   commandName?: string;
-//   messages?: string[];
-// };
-
-// type State = {
-//   counter: number,
-//   xOffset: number,
-//   yOffset: number,
-//   clientX: number,
-//   clientY: number,
-//   dragging: boolean,
-// };
-
-// class Shell extends React.Component<Props, State> {
-//   constructor(props : Props) {
-//     super(props);
-
-//     const { initialLeft, initialTop } = this.props;
-
-//     this.state = {
-//       counter: 0,
-//       xOffset: initialLeft,
-//       yOffset: initialTop,
-//       clientX: 0,
-//       clientY: 0,
-//       dragging: false,
-//     };
-//   }
-
-//   handleDragStart = (e: any) => {
-//     this.setState({
-//       clientX: e.clientX,
-//       clientY: e.clientY,
-//       dragging: true,
-//     });
-//   };
-
-//   handleDrag = (e: any) => {
-//     const {
-//       clientX, clientY, xOffset, yOffset,
-//     } = this.state;
-//     e.preventDefault();
-
-//     this.setState({
-//       xOffset: xOffset + e.clientX - clientX,
-//       yOffset: yOffset + e.clientY - clientY,
-//       clientX: e.clientX,
-//       clientY: e.clientY,
-//     });
-//   };
-
-//   handleDragEnd = (e: any) => {
-//     const { clientX, clientY } = this.state;
-
-//     this.setState({
-//       dragging: false,
-//     });
-//   };
-
-//   handleMouseDown = (e: any) => {
-//     e.preventDefault();
-//     document.body.style.cursor = 'grabbing';
-//   };
-
-//   getAnimation = (text: string, speed?: number) => {
-//     const { counter } = this.state;
-
-//     return (
-//       <TypeAnimation
-//         sequence={[
-//           text,
-//           1000,
-//           () => {
-//             this.setState({
-//               counter: counter + 1,
-//             });
-//           },
-//         ]}
-//         cursor={false}
-//         style={{ fontSize: '2em', fontFamily: 'Courier New', color: 'rgb(0, 255, 0)' }}
-//         speed={speed ? speed as Speed : 60}
-//       />
-//     );
-//   };
-
-//   getAllAnimations = (): JSX.Element[] => {
-//     const { counter } = this.state;
-//     const { messages, commandName } = this.props;
-
-//     if (!messages) return ([<div />]);
-
-//     const result: JSX.Element[] = [
-//       this.getAnimation(`root@PC:~$ ./${commandName}`, 80),
-//       <p />,
-//     ];
-
-//     for (let i:number = 0; i < messages.length; i += 1) {
-//       if (counter > i) {
-//         result.push(this.getAnimation(messages[i]));
-//         result.push(<p />);
-//       }
-//     }
-
-//     return result;
-//   };
-
-//   render(): React.ReactNode {
-//     const {
-//       width, height, className, style,
-//     } = this.props;
-
-//     const { xOffset, yOffset, dragging } = this.state;
-
-//     return (
-//       <div
-//         // draggable
-//         style={{
-//           width,
-//           height,
-//           position: 'absolute',
-//           left: xOffset,
-//           top: yOffset,
-//           // userSelect: 'none',
-//         }}
-//       >
-//         <div className="Shell" style={{ width, height }}>
-//           <div
-//             className="ShellHeader"
-//             draggable
-//             onDragStart={this.handleDragStart}
-//             onDrag={this.handleDrag}
-//             onDragEnd={this.handleDragEnd}
-//             style={dragging ? { cursor: 'crosshair' } : { cursor: 'grab' }}
-//           >
-//             <img src={cmdIcon} alt="" height={30} />
-//             <>cmd</>
-//             <img className="ShellX" src={xIcon} alt="" height={20} />
-//           </div>
-//           <div className="ShellText">
-//             {this.getAllAnimations()}
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default connector(Shell);

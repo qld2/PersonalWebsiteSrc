@@ -7,18 +7,24 @@ import { MetaMenuBar } from './model/menuBar';
 export const menuBarSlice = createSlice({
   name: 'menuBar',
   initialState: {
-    width: 200,
+    collapsed: false,
+    desireCollapsed: false,
   } as MetaMenuBar,
   reducers: {
-    setMenuBarSize: (state: MetaMenuBar, action: IAction) => {
+    setCollapsed: (state: MetaMenuBar, action: IAction) => {
       const next = state;
-      next.width = action.payload.width;
+      next.collapsed = action.payload.collapsed;
+      next;
+    },
+    setDesireCollapsed: (state: MetaMenuBar, action: IAction) => {
+      const next = state;
+      next.desireCollapsed = action.payload.desireCollapsed;
       next;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMenuBarSize } = menuBarSlice.actions;
+export const { setCollapsed, setDesireCollapsed } = menuBarSlice.actions;
 
 export default menuBarSlice.reducer;

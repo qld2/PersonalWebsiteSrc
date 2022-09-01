@@ -6,7 +6,7 @@ export type Dimensions = {
   height: number,
 };
 
-function getWindowDimensions(): Dimensions {
+export function getWindowDimensions(): Dimensions {
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
@@ -15,19 +15,21 @@ function getWindowDimensions(): Dimensions {
 }
 
 export default function useWindowDimensions(callback: Function<Dimensions, void>) {
+  console.log('A');
   callback(getWindowDimensions());
 
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  // const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-      callback(getWindowDimensions());
-    }
+  // useEffect(() => {
+  //   function handleResize() {
+  //     setWindowDimensions(getWindowDimensions());
+  //     console.log('B');
+  //     callback(getWindowDimensions());
+  //   }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  //   window.addEventListener('resize', handleResize);
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
 
-  return windowDimensions;
+  return getWindowDimensions();// windowDimensions;
 }

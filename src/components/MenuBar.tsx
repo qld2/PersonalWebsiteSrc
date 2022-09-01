@@ -19,8 +19,9 @@ import Icon, {
 } from '@ant-design/icons';
 
 import { AppState, AppDispatch } from 'src/Root';
-import { setMenuBarSize } from 'reducer/menuBar/menuBarSlice';
+import { setCollapsed, setDesireCollapsed } from 'reducer/menuBar/menuBarSlice';
 import SVG from 'resources/Q.svg';
+import { increment } from '../reducer/blog/blogSlice';
 
 export const SIDEMENU_COLLAPSED_SIZE = 90;
 export const SIDEMENU_EXPANDED_SIZE = 200;
@@ -28,6 +29,7 @@ const Q_ICON_MARGIN = 20;
 
 const mapStateToProps = (state: AppState) => ({
   pathname: state.router.location.pathname,
+  collapsed: state.menuBar.collapsed,
 });
 
 function mapDispatchToProps(dispatch : AppDispatch) {
@@ -40,10 +42,11 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
+  windowHeight: number
 };
 
 type State = {
-  collapsed: boolean,
+  depric: boolean,
 };
 
 class MenuBar extends React.Component<Props, State> {
@@ -51,7 +54,7 @@ class MenuBar extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      collapsed: false,
+      depric: false,
     };
   }
 
@@ -70,16 +73,17 @@ class MenuBar extends React.Component<Props, State> {
   );
 
   toggleCollapsed = () => {
-    const { collapsed } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, collapsed } = this.props;
 
-    dispatch(setMenuBarSize(!collapsed
-      ? { width: SIDEMENU_COLLAPSED_SIZE }
-      : { width: SIDEMENU_EXPANDED_SIZE }));
+    const result = !collapsed;
 
-    this.setState({
-      collapsed: !collapsed,
-    });
+    dispatch(increment({}));
+    dispatch(setCollapsed({ collapsed: result }));
+    dispatch(setDesireCollapsed({ desireCollapsed: result }));
+
+    // dispatch(setMenuBarState(!collapsed
+    //   ? { collapsed: true, desireCollapsed: true }
+    //   : { collapsed: false, desireCollapsed: false }));
   };
 
   openLinkInNewTab = (key: string) => {
@@ -100,7 +104,6 @@ class MenuBar extends React.Component<Props, State> {
     else if (e.target.dataset.icon) id = e.target.dataset.icon;
     else if (e.target.parentNode.dataset.icon) id = e.target.parentNode.dataset.icon;
 
-    console.log(id);
     this.openLinkInNewTab(id);
   };
 
@@ -113,15 +116,22 @@ class MenuBar extends React.Component<Props, State> {
     dispatch(push(`/${e.key}`));
   };
 
+  getLinkIconSize = () => {
+    const { windowHeight } = this.props;
+
+    if (windowHeight < 560) return 25;
+
+    return 50;
+  };
+
   render(): React.ReactNode {
-    const { pathname } = this.props;
-    const { collapsed } = this.state;
+    const { pathname, collapsed } = this.props;
 
     const fontSizeQ = collapsed
       ? SIDEMENU_COLLAPSED_SIZE - 2 * Q_ICON_MARGIN
       : SIDEMENU_EXPANDED_SIZE - 2 * Q_ICON_MARGIN;
     const width = collapsed ? SIDEMENU_COLLAPSED_SIZE : SIDEMENU_EXPANDED_SIZE;
-    const fontSizeButtons = 50;
+    const fontSizeButtons = this.getLinkIconSize();
 
     return (
       <div className="MenuBar" style={{ width }}>
@@ -173,6 +183,7 @@ class MenuBar extends React.Component<Props, State> {
             >
               <GithubOutlined
                 style={{ fontSize: fontSizeButtons, color: '#001529' }}
+                // style={{ fontSize: fontSizeButtons, color: '#001529' }}
               />
             </div>
 

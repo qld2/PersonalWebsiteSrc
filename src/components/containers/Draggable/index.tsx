@@ -23,11 +23,9 @@ class Draggable extends React.Component<Props, State> {
   constructor(props : Props) {
     super(props);
 
-    const { initialLeft, initialTop } = this.props;
-
     this.state = {
-      xOffset: initialLeft,
-      yOffset: initialTop,
+      xOffset: 0,
+      yOffset: 0,
       clientX: 0,
       clientY: 0,
       dragging: false,
@@ -69,7 +67,7 @@ class Draggable extends React.Component<Props, State> {
 
   render(): React.ReactNode {
     const {
-      width, height, children,
+      width, height, children, initialLeft, initialTop,
     } = this.props;
 
     const {
@@ -83,8 +81,8 @@ class Draggable extends React.Component<Props, State> {
           width,
           height,
           position: 'absolute',
-          left: xOffset,
-          top: yOffset,
+          left: initialLeft + xOffset,
+          top: initialTop + yOffset,
         }}
         onDragStart={this.handleDragStart}
         onDrag={this.handleDrag}
