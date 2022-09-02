@@ -26,7 +26,7 @@ type Props = {
   // initialLeft: number;
 
   commandName?: string;
-  messages?: string[];
+  messages?: string[][];
 
   active?: boolean;
   finishedCallback?: (none: void) => void;
@@ -64,19 +64,26 @@ class Shell extends React.Component<Props, State> {
     });
   };
 
-  getAnimation = (params: { text: string, speed?: number, callback?: boolean }
-  = { text: '', speed: 60, callback: false }) => {
+  getAnimation = (params: { texts: string[], speed?: number, callback?: boolean }
+  = { texts: [], speed: 60, callback: false }) => {
     const { counter } = this.state;
     const { finishedCallback, fontScaleMultiplier } = this.props;
 
     const fontSize = 25 * fontScaleMultiplier;
 
+    const arr:(string | number)[] = [];
+    params.texts.forEach((text) => {
+      arr.push(text);
+      arr.push(500);
+    });
+
     return (
       <div style={{ fontSize, fontFamily: 'Courier New', color: 'rgb(0, 255, 0)' }}>
         <TypeAnimation
           sequence={[
-            params.text,
-            500,
+            // params.text,
+            // 500,
+            ...arr,
             () => {
               this.setState({
                 counter: counter + 1,
@@ -109,7 +116,7 @@ class Shell extends React.Component<Props, State> {
       result.push(
         <div className="ShellCommand" style={{ fontSize }}>
           <div className="ShellPrompt" style={{ fontSize }}>root@PC:~$</div>
-          {active ? this.getAnimation({ text: `./${commandName}`, speed: 30 }) : <div />}
+          {active ? this.getAnimation({ texts: [`./${commandName}`], speed: 30 }) : <div />}
         </div>,
         <p />,
       );
@@ -117,8 +124,8 @@ class Shell extends React.Component<Props, State> {
 
     for (let i:number = 0; i < messages.length; i += 1) {
       if (counter > i && active) {
-        if (i === messages.length - 1) result.push(this.getAnimation({ text: messages[i], callback: true, speed: 90 }));
-        else result.push(this.getAnimation({ text: messages[i], speed: 90 }));
+        if (i === messages.length - 1) result.push(this.getAnimation({ texts: messages[i], callback: true, speed: 90 }));
+        else result.push(this.getAnimation({ texts: messages[i], speed: 90 }));
         result.push(<p />);
       }
     }
@@ -149,9 +156,6 @@ class Shell extends React.Component<Props, State> {
     const { xOffset, yOffset } = this.state;
 
     const { width, height } = this.getDimensions();
-
-    // const height = 400 * scaleMultiplier;
-    // const width = height * aspectRatio;
 
     return (
       <div

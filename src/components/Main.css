@@ -1,13 +1,19 @@
 .Main {
-    overflow: hidden;
     overflow-x: hidden;
+    /* overflow-x: hidden; */
     background-color:dimgrey;
     display: flex;
+    
+    /* scrollbar-width: none; 
+    -ms-overflow-style: none;  */
 }
 
-.Header {
-    background-color: gray;
-}
+/* .MainOverflowFix {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+} */
 
 .Background {
     background-color: rgb(71, 71, 71);
@@ -20,26 +26,37 @@
 .Video {
     position: fixed;
     left: 0;
-    top: 0;
+    bottom: 0;
     z-index: 1;
-}
-
-.OverVideo {
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
 }
 
 .Card {
     /* background-color: rgba(126, 29, 29, 0.6); */
-    min-width: 90%;
-    min-height: 80%;
+    /* width: 100%;
+    height: 100%;
+    overflow-x: hidden; */
     flex-direction: column;
     justify-content: center;
     z-index: 2;
 }
 
-.Menu {
-    width: 20%;
+/* ::-webkit-scrollbar-track {
+    width: 10px;
+    color: grey;
+} */
+::-webkit-scrollbar {
+    width: 10px !important;
+    background-color: black;
 }
+::-webkit-scrollbar-thumb {
+    background-color: grey;
+}
+  /* Handle */
+/* ::-webkit-scrollbar-thumb {
+    background: #888;
+} */
+  
+  /* Handle on hover */
+  /* ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  } */

@@ -21,7 +21,6 @@ import Icon, {
 import { AppState, AppDispatch } from 'src/Root';
 import { setCollapsed, setDesireCollapsed } from 'reducer/menuBar/menuBarSlice';
 import SVG from 'resources/Q.svg';
-import { increment } from '../reducer/blog/blogSlice';
 
 export const SIDEMENU_COLLAPSED_SIZE = 90;
 export const SIDEMENU_EXPANDED_SIZE = 200;
@@ -30,6 +29,7 @@ const Q_ICON_MARGIN = 20;
 const mapStateToProps = (state: AppState) => ({
   pathname: state.router.location.pathname,
   collapsed: state.menuBar.collapsed,
+  height: state.applet.height,
 });
 
 function mapDispatchToProps(dispatch : AppDispatch) {
@@ -41,9 +41,7 @@ function mapDispatchToProps(dispatch : AppDispatch) {
 const connector = connect(mapStateToProps, mapDispatchToProps);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type Props = PropsFromRedux & {
-  windowHeight: number
-};
+type Props = PropsFromRedux & {};
 
 type State = {
   depric: boolean,
@@ -77,13 +75,8 @@ class MenuBar extends React.Component<Props, State> {
 
     const result = !collapsed;
 
-    dispatch(increment({}));
     dispatch(setCollapsed({ collapsed: result }));
     dispatch(setDesireCollapsed({ desireCollapsed: result }));
-
-    // dispatch(setMenuBarState(!collapsed
-    //   ? { collapsed: true, desireCollapsed: true }
-    //   : { collapsed: false, desireCollapsed: false }));
   };
 
   openLinkInNewTab = (key: string) => {
@@ -116,25 +109,17 @@ class MenuBar extends React.Component<Props, State> {
     dispatch(push(`/${e.key}`));
   };
 
-  getLinkIconSize = () => {
-    const { windowHeight } = this.props;
-
-    if (windowHeight < 560) return 25;
-
-    return 50;
-  };
-
   render(): React.ReactNode {
-    const { pathname, collapsed } = this.props;
+    const { pathname, collapsed, height } = this.props;
 
     const fontSizeQ = collapsed
       ? SIDEMENU_COLLAPSED_SIZE - 2 * Q_ICON_MARGIN
       : SIDEMENU_EXPANDED_SIZE - 2 * Q_ICON_MARGIN;
     const width = collapsed ? SIDEMENU_COLLAPSED_SIZE : SIDEMENU_EXPANDED_SIZE;
-    const fontSizeButtons = this.getLinkIconSize();
+    const fontSizeButtons = 50;
 
     return (
-      <div className="MenuBar" style={{ width }}>
+      <div className="MenuBar" style={{ width, height }}>
         <div className="MenuBarIconHolder">
           <Icon
             className="MenuBarIcon"

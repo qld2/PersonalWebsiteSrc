@@ -9,20 +9,15 @@ import {
 import 'antd/dist/antd.variable.css';
 import './Main.css';
 
-import Icon, { ThunderboltTwoTone } from '@ant-design/icons';
-
 import Background from 'resources/Graph.mp4';
-// import { setDimensions } from 'reducer/applet/appletSlice';
-import { AppState, AppDispatch } from 'src/Root'; // fix import resolution
+import { AppState, AppDispatch } from 'src/Root';
 
+import { MIN_WIDTH, MIN_HEIGHT } from 'util/dimConstraints';
+import { setDimensions } from 'reducer/applet/appletSlice';
+import { setCollapsed } from 'reducer/menuBar/menuBarSlice';
 import MenuBar, { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from './MenuBar';
 import Introduction from './pages/Introduction';
 import Blog from './pages/Blog';
-import { setCollapsed } from '../reducer/menuBar/menuBarSlice';
-import { MIN_WIDTH } from '../dimConstraints';
-// import { setBlogState } from '../reducer/blog/blogSlice';
-import { setDimensions } from '../reducer/applet/appletSlice';
-// import Broadcast from './displays/Broadcast';
 
 const mapStateToProps = (state: AppState) => ({
   menuBarWidth: state.menuBar.collapsed
@@ -51,9 +46,15 @@ class Main extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { width: window.innerWidth, height: window.innerHeight };
+    this.state = {
+      width: window.innerHeight < MIN_HEIGHT ? window.innerWidth - 10 : window.innerWidth,
+      height: window.innerHeight < MIN_HEIGHT ? MIN_HEIGHT : window.innerHeight,
+    };
 
-    this.updateDimensions(window.innerWidth, window.innerHeight);
+    this.updateDimensions(
+      window.innerHeight < MIN_HEIGHT ? window.innerWidth - 10 : window.innerWidth,
+      window.innerHeight < MIN_HEIGHT ? MIN_HEIGHT : window.innerHeight,
+    );
   }
 
   componentDidMount() {
@@ -67,7 +68,19 @@ class Main extends React.Component<Props, State> {
   setAppletDimensions = (e: Event | null):any => {
     if (e === null) return;
     const target = e.target as Window;
-    this.updateDimensions(target.innerWidth, target.innerHeight);
+
+    const width = target.innerHeight < MIN_HEIGHT ? target.innerWidth - 10 : target.innerWidth;
+    const height = target.innerHeight < MIN_HEIGHT ? MIN_HEIGHT : target.innerHeight;
+
+    this.setState({
+      width,
+      height,
+    });
+
+    this.updateDimensions(
+      width,
+      height,
+    );
   };
 
   updateDimensions = (width: number, height: number) => {
@@ -93,27 +106,22 @@ class Main extends React.Component<Props, State> {
       width: width - menuBarWidth,
       height,
     }));
-
-    this.setState({
-      width,
-      height,
-    });
   };
 
   render() {
     const { width, height } = this.state;
+
     return (
       <div
         className="Main"
         style={{ width, height }}
       >
-        <MenuBar windowHeight={height} />
+
+        <MenuBar />
 
         <div className="Card">
-
           <Switch>
             <Route path="/Introduction">
-              {/* <p>Portfolio</p> */}
               <Introduction />
             </Route>
             <Route path="/Portfolio">
@@ -121,7 +129,6 @@ class Main extends React.Component<Props, State> {
             </Route>
             <Route path="/Blog">
               <p>Portfolio</p>
-              {/* <Blog /> */}
             </Route>
             <Route path="/Contact">
               <p>Portfolio</p>
@@ -130,8 +137,6 @@ class Main extends React.Component<Props, State> {
               <Redirect to="/Introduction" />
             </Route>
           </Switch>
-
-          {/* <Broadcast message="I Like To Eat Apples and Bananas" /> */}
         </div>
 
         <video className="Video" autoPlay muted loop id="backgroundVideo">

@@ -11,11 +11,17 @@ import type {
 
 import Shell from 'components/displays/Shell';
 import IdPicture from 'components/displays/IdPicture';
-import { MAX_WIDTH, MIN_WIDTH } from '../../../dimConstraints'; // ????
+import { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from 'components/MenuBar';
 import IntroOne from './IntroOne.txt';
 import Interests from './Interests.txt';
-import lerp, { Point, vectorAdd } from '../../../util/lerp';
-import { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from '../../MenuBar';
+import {
+  LayoutParams,
+  scale,
+  introductionPosition,
+  shellThreePosition,
+  professionalInterestsPosition,
+  idPicPosition,
+} from './layout';
 
 const mapStateToProps = (state: AppState) => ({
   width: state.applet.width,
@@ -61,69 +67,15 @@ class Introduction extends React.Component<Props, State> {
     e.preventDefault();
   };
 
-  scale = () => {
-    const { width, menuWidth } = this.props;
-
-    const maxScale = 1;
-    const minScale = 0.5;
-
-    const pf:Point = { x: maxScale, y: 0 };
-    const p0:Point = { x: minScale, y: 0 };
-
-    return lerp(pf, p0, MAX_WIDTH - menuWidth, MIN_WIDTH - menuWidth, width);
-  };
-
-  uniformOffset = ():Point => {
-    const { width, menuWidth } = this.props;
-
-    if (width <= MAX_WIDTH - menuWidth) return { x: 0, y: 0 };
-
-    return { x: (width - (MAX_WIDTH - menuWidth)) / 2, y: 0 };
-  };
-
-  shellOnePosition = ():Point => {
-    const { width, menuWidth } = this.props;
-
-    const pf:Point = { x: 65, y: 48 };
-    const p0:Point = { x: 45, y: 114 };
-
-    return lerp(pf, p0, MAX_WIDTH - menuWidth, MIN_WIDTH - menuWidth, width);
-  };
-
-  shellTwoPosition = ():Point => {
-    const { width, menuWidth } = this.props;
-
-    const pf:Point = { x: 156, y: 432 };
-    const p0:Point = { x: 91, y: 331 };
-
-    return lerp(pf, p0, MAX_WIDTH - menuWidth, MIN_WIDTH - menuWidth, width);
-  };
-
-  idPicPosition = ():Point => {
-    const { width, menuWidth } = this.props;
-
-    const pf:Point = { x: 543, y: 25 };
-    const p0:Point = { x: 313, y: 105 };
-
-    return lerp(pf, p0, MAX_WIDTH - menuWidth, MIN_WIDTH - menuWidth, width);
-  };
-
   render(): React.ReactNode {
-    const { width, height, menuWidth: absoluteMargin } = this.props;
+    const params:LayoutParams = this.props;
+    const { width, height } = this.props;
+
     const { secondShellActive } = this.state;
 
-    const messagesA = ['Hello Friend,', IntroOne];
-    const messagesB = [Interests];
-
-    const scale = this.scale().x;
-
-    const shellOneScale = scale * 1;
-    const shellTwoScale = scale * 1;
-
-    const uniformOffset = this.uniformOffset();
-    const shellOnePos = this.shellOnePosition();
-    const shellTwoPos = this.shellTwoPosition();
-    const idPicPos = this.idPicPosition();
+    const messagesA = [['Hello Friend,'], [IntroOne]];
+    const messagesB = [[Interests]];
+    const messagesC = [['I am a:'], ['cowboy', 'astronaut', 'doctor', 'farmer']];
 
     return (
       <div
@@ -133,9 +85,9 @@ class Introduction extends React.Component<Props, State> {
       >
         <Shell
           aspectRatio={1}
-          scaleMultiplier={shellOneScale}
-          fontScaleMultiplier={shellOneScale}
-          initialPos={vectorAdd(uniformOffset, shellOnePos)}
+          scaleMultiplier={scale(params)}
+          fontScaleMultiplier={scale(params)}
+          initialPos={introductionPosition(params)}
           commandName="Introduce"
           messages={messagesA}
           finishedCallback={this.activateSecondShell}
@@ -143,18 +95,27 @@ class Introduction extends React.Component<Props, State> {
 
         <Shell
           aspectRatio={0.5}
-          scaleMultiplier={shellTwoScale}
-          fontScaleMultiplier={shellTwoScale}
-          initialPos={vectorAdd(uniformOffset, shellTwoPos)}
-          commandName="Interests"
+          scaleMultiplier={scale(params)}
+          fontScaleMultiplier={scale(params)}
+          initialPos={professionalInterestsPosition(params)}
+          commandName="ProffesionalInterests"
           messages={messagesB}
           active={secondShellActive}
         />
 
         <IdPicture
-          scaleMultiplier={scale}
-          initialPos={vectorAdd(uniformOffset, idPicPos)}
+          scaleMultiplier={scale(params)}
+          initialPos={idPicPosition(params)}
         />
+
+        {/* <Shell
+          aspectRatio={1}
+          scaleMultiplier={scale}
+          fontScaleMultiplier={scale}
+          initialPos={shellThreePosition()}
+          commandName="Interests"
+          messages={messagesC}
+        /> */}
       </div>
     );
   }
