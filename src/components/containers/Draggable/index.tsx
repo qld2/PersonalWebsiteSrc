@@ -80,7 +80,7 @@ class Draggable extends React.Component<Props, State> {
         style={{
           width,
           height,
-          position: 'absolute',
+          position: 'fixed',
           left: initialLeft + xOffset,
           top: initialTop + yOffset,
         }}

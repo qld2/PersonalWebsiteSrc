@@ -76,6 +76,10 @@ const config: Configuration = {
         use: 'file-loader?name=images/[name].[ext]',
       },
       {
+        test: /\.mp4$/,
+        use: 'file-loader?name=videos/[name].[ext]',
+      },
+      {
         test: /\.svg$/,
         use: [
           {
@@ -90,10 +94,6 @@ const config: Configuration = {
           },
         ],
       }, 
-      {
-        test: /\.mp4$/,
-        use: 'file-loader?name=videos/[name].[ext]',
-      },
     ],
   },
   resolve: {

@@ -18,6 +18,7 @@ import { setCollapsed } from 'reducer/menuBar/menuBarSlice';
 import MenuBar, { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from './MenuBar';
 import Introduction from './pages/Introduction';
 import Blog from './pages/Blog';
+import Portfolio from './pages/Portfolio';
 
 const mapStateToProps = (state: AppState) => ({
   menuBarWidth: state.menuBar.collapsed
@@ -103,7 +104,7 @@ class Main extends React.Component<Props, State> {
     }
 
     dispatch(setDimensions({
-      width: width - menuBarWidth,
+      width,
       height,
     }));
   };
@@ -122,19 +123,24 @@ class Main extends React.Component<Props, State> {
         <div className="Card">
           <Switch>
             <Route path="/Introduction">
-              <Introduction />
+              {/* <Introduction /> */}
+              <div style={{ backgroundColor: 'red', width: 100, height: 100 }} />
             </Route>
-            <Route path="/Portfolio">
-              <p>Portfolio</p>
+            {/* <Route path="/Portfolio">
+              <Portfolio />
             </Route>
             <Route path="/Blog">
-              <p>Portfolio</p>
+              <Portfolio />
             </Route>
             <Route path="/Contact">
-              <p>Portfolio</p>
-            </Route>
+              <Portfolio />
+            </Route> */}
             <Route path="">
-              <Redirect to="/Introduction" />
+              <div style={{ backgroundColor: 'blue', width: 100, height: 100 }} />
+              {/* <Redirect to="/Introduction" /> */}
+            </Route>
+            <Route>
+              <div style={{ backgroundColor: 'green', width: 100, height: 100 }} />
             </Route>
           </Switch>
         </div>

@@ -18,8 +18,10 @@ import {
   LayoutParams,
   scale,
   introductionPosition,
-  shellThreePosition,
+  interestsPosition,
   professionalInterestsPosition,
+  whoPosition,
+  interactivePosition,
   idPicPosition,
 } from './layout';
 
@@ -75,7 +77,12 @@ class Introduction extends React.Component<Props, State> {
 
     const messagesA = [['Hello Friend,'], [IntroOne]];
     const messagesB = [[Interests]];
-    const messagesC = [['I am a:'], ['cowboy', 'astronaut', 'doctor', 'farmer']];
+    const messagesC = [['I am a:'], ['Programmer', 'Mathematician',
+      'Designer', 'Artist', 'Collaborator']];
+
+    const messagesD = [['I enjoy:'], ['Programming', 'Music',
+      'Snowboarding', 'Gaming', 'Yoga', 'Puzzles', 'Socializing',
+      'Proofs', '']];
 
     return (
       <div
@@ -98,7 +105,7 @@ class Introduction extends React.Component<Props, State> {
           scaleMultiplier={scale(params)}
           fontScaleMultiplier={scale(params)}
           initialPos={professionalInterestsPosition(params)}
-          commandName="ProffesionalInterests"
+          commandName="ProfessionalInterests"
           messages={messagesB}
           active={secondShellActive}
         />
@@ -108,14 +115,33 @@ class Introduction extends React.Component<Props, State> {
           initialPos={idPicPosition(params)}
         />
 
-        {/* <Shell
-          aspectRatio={1}
-          scaleMultiplier={scale}
-          fontScaleMultiplier={scale}
-          initialPos={shellThreePosition()}
-          commandName="Interests"
+        <Shell
+          aspectRatio={0.6}
+          scaleMultiplier={scale(params) * 0.6}
+          fontScaleMultiplier={scale(params)}
+          initialPos={whoPosition(params)}
+          commandName="Who"
           messages={messagesC}
-        /> */}
+        />
+
+        <Shell
+          aspectRatio={0.6}
+          scaleMultiplier={scale(params) * 0.6}
+          fontScaleMultiplier={scale(params)}
+          initialPos={interestsPosition(params)}
+          commandName="Interests"
+          messages={messagesD}
+        />
+
+        <Shell
+          aspectRatio={0.6}
+          scaleMultiplier={scale(params) * 0.6}
+          fontScaleMultiplier={scale(params)}
+          initialPos={interactivePosition(params)}
+          commandName="Interests"
+          messages={messagesD}
+        />
+
       </div>
     );
   }

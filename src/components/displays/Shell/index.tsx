@@ -163,7 +163,7 @@ class Shell extends React.Component<Props, State> {
         style={{
           width,
           height,
-          position: 'absolute',
+          position: 'fixed',
           left: initialPos.x + xOffset,
           top: initialPos.y + yOffset,
         }}

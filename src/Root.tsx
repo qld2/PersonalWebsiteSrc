@@ -5,6 +5,9 @@ import { ConnectedRouter } from 'connected-react-router';
 import { ConfigProvider } from 'antd';
 import Main from './components/Main';
 import store, { history } from './store';
+// import configureStore, { history } from './store-depricated';
+
+// const store = configureStore(history);
 
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

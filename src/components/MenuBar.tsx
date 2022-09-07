@@ -105,6 +105,7 @@ class MenuBar extends React.Component<Props, State> {
   };
 
   onClick = (e: any) => {
+    console.log(e.key);
     const { dispatch } = this.props;
     dispatch(push(`/${e.key}`));
   };

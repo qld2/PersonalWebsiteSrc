@@ -1,0 +1,9 @@
+.ConstructionModalModal {
+    background-color: rgb(224, 221, 31);
+}
+
+.ConstructionModalTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
