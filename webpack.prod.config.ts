@@ -12,6 +12,9 @@ const config: webpack.Configuration = {
     path: path.resolve(__dirname, "build"),
     filename: "[name].[contenthash].js",
     publicPath: "",
+    clean: {
+      keep: '.git'
+    }
   },
   module: {
     rules: [
@@ -101,7 +104,7 @@ const config: webpack.Configuration = {
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
   ],
 };
 

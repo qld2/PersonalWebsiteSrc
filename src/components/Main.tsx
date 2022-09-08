@@ -123,10 +123,9 @@ class Main extends React.Component<Props, State> {
         <div className="Card">
           <Switch>
             <Route path="/Introduction">
-              {/* <Introduction /> */}
-              <div style={{ backgroundColor: 'red', width: 100, height: 100 }} />
+              <Introduction />
             </Route>
-            {/* <Route path="/Portfolio">
+            <Route path="/Portfolio">
               <Portfolio />
             </Route>
             <Route path="/Blog">
@@ -134,13 +133,9 @@ class Main extends React.Component<Props, State> {
             </Route>
             <Route path="/Contact">
               <Portfolio />
-            </Route> */}
-            <Route path="">
-              <div style={{ backgroundColor: 'blue', width: 100, height: 100 }} />
-              {/* <Redirect to="/Introduction" /> */}
             </Route>
-            <Route>
-              <div style={{ backgroundColor: 'green', width: 100, height: 100 }} />
+            <Route path="">
+              <Redirect to="/Introduction" />
             </Route>
           </Switch>
         </div>

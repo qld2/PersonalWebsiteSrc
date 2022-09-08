@@ -7,7 +7,7 @@ export type LayoutParams = { width: number, height: number };
 
 export const scale = (p:LayoutParams) => {
   const maxScale = 1;
-  const minScale = 0.77;
+  const minScale = 0.6;
 
   const pf:Point = { x: maxScale, y: 0 };
   const p0:Point = { x: minScale, y: 0 };
@@ -41,7 +41,7 @@ export const introductionPosition = (p:LayoutParams):Point => {
 
 export const professionalInterestsPosition = (p:LayoutParams):Point => {
   const pf:Point = { x: 562, y: 551 };
-  const p0:Point = { x: 367, y: 384 };
+  const p0:Point = { x: 308, y: 333 };
 
   const tWidth = (p.width - MIN_WIDTH)
     / (MAX_WIDTH - MIN_WIDTH);
@@ -54,7 +54,7 @@ export const professionalInterestsPosition = (p:LayoutParams):Point => {
 
 export const whoPosition = (p:LayoutParams):Point => {
   const pf:Point = { x: 1243, y: 170 };
-  const p0:Point = { x: 876, y: 88 };
+  const p0:Point = { x: 736, y: 81 };
 
   const tWidth = (p.width - MIN_WIDTH)
     / (MAX_WIDTH - MIN_WIDTH);
@@ -67,7 +67,7 @@ export const whoPosition = (p:LayoutParams):Point => {
 
 export const interestsPosition = (p:LayoutParams):Point => {
   const pf:Point = { x: 1243, y: 390 };
-  const p0:Point = { x: 876, y: 256 };
+  const p0:Point = { x: 736, y: 221 };
 
   const tWidth = (p.width - MIN_WIDTH)
     / (MAX_WIDTH - MIN_WIDTH);
@@ -80,7 +80,7 @@ export const interestsPosition = (p:LayoutParams):Point => {
 
 export const interactivePosition = (p:LayoutParams):Point => {
   const pf:Point = { x: 1243, y: 609 };
-  const p0:Point = { x: 876, y: 424 };
+  const p0:Point = { x: 736, y: 221 };
 
   const tWidth = (p.width - MIN_WIDTH)
     / (MAX_WIDTH - MIN_WIDTH);
@@ -93,7 +93,7 @@ export const interactivePosition = (p:LayoutParams):Point => {
 
 export const idPicPosition = (p:LayoutParams):Point => {
   const pf:Point = { x: 894, y: 113 };
-  const p0:Point = { x: 610, y: 64 };
+  const p0:Point = { x: 530, y: 72 };
 
   const tWidth = (p.width - MIN_WIDTH)
     / (MAX_WIDTH - MIN_WIDTH);
