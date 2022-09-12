@@ -9,7 +9,8 @@ import type {
   AppState, AppDispatch,
 } from 'src/Root';
 
-import Shell from 'components/displays/Shell';
+import CommandShell from 'components/displays/Shell/CommandShell';
+import InteractiveShell from 'components/displays/Shell/InteractiveShell';
 import IdPicture from 'components/displays/IdPicture';
 import { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from 'components/MenuBar';
 import IntroOne from './IntroOne.txt';
@@ -90,7 +91,7 @@ class Introduction extends React.Component<Props, State> {
         style={{ width, height }}
         onDragOver={this.onDragOver}
       >
-        <Shell
+        <CommandShell
           aspectRatio={1}
           scaleMultiplier={scale(params)}
           fontScaleMultiplier={scale(params)}
@@ -100,7 +101,7 @@ class Introduction extends React.Component<Props, State> {
           finishedCallback={this.activateSecondShell}
         />
 
-        <Shell
+        <CommandShell
           aspectRatio={0.5}
           scaleMultiplier={scale(params)}
           fontScaleMultiplier={scale(params)}
@@ -115,7 +116,7 @@ class Introduction extends React.Component<Props, State> {
           initialPos={idPicPosition(params)}
         />
 
-        <Shell
+        <CommandShell
           aspectRatio={0.6}
           scaleMultiplier={scale(params) * 0.6}
           fontScaleMultiplier={scale(params)}
@@ -124,7 +125,7 @@ class Introduction extends React.Component<Props, State> {
           messages={messagesC}
         />
 
-        <Shell
+        <CommandShell
           aspectRatio={0.6}
           scaleMultiplier={scale(params) * 0.6}
           fontScaleMultiplier={scale(params)}
@@ -133,13 +134,11 @@ class Introduction extends React.Component<Props, State> {
           messages={messagesD}
         />
 
-        <Shell
+        <InteractiveShell
           aspectRatio={0.6}
           scaleMultiplier={scale(params) * 0.6}
           fontScaleMultiplier={scale(params)}
           initialPos={interactivePosition(params)}
-          commandName="Interests"
-          messages={messagesD}
         />
 
       </div>

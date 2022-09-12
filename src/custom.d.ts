@@ -9,5 +9,6 @@ declare module "*.jpeg";
 declare module "*.png";
 declare module "*.txt";
 declare module "*.pdf";
+// declare module "*.json";
 
 declare module 'pdfjs-dist/build/pdf.worker.entry';

@@ -1,0 +1,17 @@
+{
+    "projects" : [
+        {
+            "key": 0,
+            "title": "This Website!",
+            "github": "https://github.com/qld2/PersonalWebsiteSrc"
+        },
+        {
+            "key": 1,
+            "title": "Proprietary SPA"
+        },
+        {
+            "key": 2,
+            "title": "Game Engine"
+        }
+    ]
+}
