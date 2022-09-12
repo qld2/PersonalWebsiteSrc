@@ -37,6 +37,10 @@
     margin: 50px;
 }
 
+.PortfolioReadmeDisplay {
+    background-color: white;
+}
+
 .PortfolioMenuSide { 
     /* outline: 2px;
     outline-style: solid;

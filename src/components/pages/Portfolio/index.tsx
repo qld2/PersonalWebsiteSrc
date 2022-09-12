@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { push } from 'connected-react-router';
+import ReactMarkdown from 'react-markdown';
 
 import 'antd/dist/antd.variable.css';
 import './Portfolio.css';
@@ -14,6 +15,7 @@ import { Menu } from 'antd';
 import ConstructionModal from '../../displays/ConstructionModal';
 
 import Projects from './projects.json';
+import getFileAsString from './parseMD';
 
 const mapStateToProps = (state: AppState) => ({
   width: state.applet.width,
@@ -35,7 +37,8 @@ type Props = PropsFromRedux & {
 };
 
 type State = {
-  counter: number,
+  currentProject: number,
+  ex: string
 };
 
 class Portfolio extends React.Component<Props, State> {
@@ -43,7 +46,8 @@ class Portfolio extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      counter: 0,
+      currentProject: 0,
+      ex: '',
     };
   }
 
@@ -59,6 +63,19 @@ class Portfolio extends React.Component<Props, State> {
     ));
 
     return result;
+  };
+
+  getCurrentProject = ():JSX.Element => {
+    getFileAsString('https://raw.githubusercontent.com/qld2/PersonalWebsiteSrc/main/README.md',
+      (result:string) => { this.setState({ ex: result }); });
+
+    const { ex } = this.state;
+
+    return (
+      <div className="PortfolioReadmeDisplay">
+        <ReactMarkdown>{ ex }</ReactMarkdown>
+      </div>
+    );
   };
 
   render(): React.ReactNode {
@@ -84,7 +101,9 @@ class Portfolio extends React.Component<Props, State> {
           <div className="PortfolioDisplaySide">
             <div
               className="PortfolioDisplay"
-            />
+            >
+              { this.getCurrentProject() }
+            </div>
           </div>
           <div className="PortfolioMenuSide">
             <div
