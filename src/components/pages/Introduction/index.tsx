@@ -134,12 +134,12 @@ class Introduction extends React.Component<Props, State> {
           messages={messagesD}
         />
 
-        <InteractiveShell
+        {/* <InteractiveShell
           aspectRatio={0.6}
           scaleMultiplier={scale(params) * 0.6}
           fontScaleMultiplier={scale(params)}
           initialPos={interactivePosition(params)}
-        />
+        /> */}
 
       </div>
     );

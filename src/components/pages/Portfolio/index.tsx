@@ -11,7 +11,7 @@ import type {
 } from 'src/Root';
 
 import { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from 'components/MenuBar';
-import { Menu } from 'antd';
+import { Menu, Spin } from 'antd';
 import ConstructionModal from '../../displays/ConstructionModal';
 
 import Projects from './projects.json';
@@ -37,8 +37,8 @@ type Props = PropsFromRedux & {
 };
 
 type State = {
-  currentProject: number,
-  ex: string
+  currentProject: string,
+  readMe: string | undefined
 };
 
 class Portfolio extends React.Component<Props, State> {
@@ -46,10 +46,32 @@ class Portfolio extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      currentProject: 0,
-      ex: '',
+      currentProject: 'None',
+      readMe: undefined,
     };
   }
+
+  componentDidMount(): void {
+    this.setProject('0');
+  }
+
+  setProject = (key: string) => {
+    this.setState({
+      currentProject: key,
+      readMe: undefined,
+    });
+
+    const readMeLocation = Projects.projects.find((element) => element.key === key)?.readMe;
+
+    if (readMeLocation) {
+      getFileAsString(readMeLocation,
+        (result:string) => { this.setState({ readMe: result }); });
+    }
+  };
+
+  onClick = (e: any) => {
+    this.setProject(e.key);
+  };
 
   getMenuItems = ():JSX.Element[] => {
     const result:JSX.Element[] = [];
@@ -65,27 +87,48 @@ class Portfolio extends React.Component<Props, State> {
     return result;
   };
 
-  getCurrentProject = ():JSX.Element => {
-    getFileAsString('https://raw.githubusercontent.com/qld2/PersonalWebsiteSrc/main/README.md',
-      (result:string) => { this.setState({ ex: result }); });
+  getProjectDisplay = ():JSX.Element => {
+    const { readMe, currentProject } = this.state;
 
-    const { ex } = this.state;
+    const project = Projects.projects.find((element) => element.key === currentProject);
 
     return (
-      <div className="PortfolioReadmeDisplay">
-        <ReactMarkdown>{ ex }</ReactMarkdown>
+      <div className="PortfolioDisplay">
+        <div className="PortfolioDisplayTop">
+          <div className="PortfolioDisplayTopTitle">
+            { project?.title }
+          </div>
+          <a
+            className="PortfolioDisplayTopLink"
+            href={project?.github}
+          >
+            {project?.github}
+          </a>
+        </div>
+        <div className="PortfolioDisplayBottom">
+          <div className="PortfolioReadmeDisplay">
+            {
+              readMe
+                ? <ReactMarkdown>{ readMe }</ReactMarkdown>
+                : (
+                  <div className="PortfolioReadmeDisplaySpin">
+                    <Spin size="large" />
+                  </div>
+                )
+            }
+          </div>
+        </div>
       </div>
     );
   };
 
   render(): React.ReactNode {
     const { width, height, menuWidth } = this.props;
+    const { currentProject } = this.state;
 
     const appletWidth = width - menuWidth;
     const margin = 50;
     const projectMenuWidth = 200;
-
-    // console.log(Projects);
 
     return (
       <div
@@ -96,18 +139,15 @@ class Portfolio extends React.Component<Props, State> {
 
         <div
           className="PortfolioCard"
-          style={{ width: appletWidth - margin, height: height - margin }}
+          style={{ width: appletWidth - 2 * margin, height: height - 2 * margin }}
         >
           <div className="PortfolioDisplaySide">
-            <div
-              className="PortfolioDisplay"
-            >
-              { this.getCurrentProject() }
-            </div>
+            { this.getProjectDisplay() }
           </div>
           <div className="PortfolioMenuSide">
             <div
               className="PortfolioMenu"
+              style={{ marginLeft: margin }}
             >
               <div className="PortfolioMenuHeader">
                 Projects
@@ -118,6 +158,8 @@ class Portfolio extends React.Component<Props, State> {
                 style={{ backgroundColor: 'transparent' }}
                 mode="inline"
                 theme="dark"
+                selectedKeys={[currentProject]}
+                onClick={this.onClick}
               >
                 { this.getMenuItems() }
               </Menu>

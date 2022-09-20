@@ -18,7 +18,7 @@
     /* outline: 2px;
     outline-style: solid;
     outline-color: red; */
-    flex: 4;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,20 +33,98 @@
     border-radius: 3px;
 
     width: 100%;
-    height: 90%;
-    margin: 50px;
+    height: 100%;
+    /* margin: 50px; */
+
+    display: flex;
+    flex-direction: column;
+}
+
+.PortfolioDisplayTop {
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.PortfolioDisplayTopTitle {
+    font-size: 3em;
+    color: aliceblue;
+    font-family:'Courier New', Courier, monospace;
+
+    line-height: 1em;
+    padding-top: 0.75em;
+}
+
+.PortfolioDisplayTopLink {
+    font-size: 1em;
+    color: aliceblue;
+    font-family:'Courier New', Courier, monospace;
+
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.PortfolioDisplayBottom {
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+ }
+
+.PortfolioDisplayLeft { 
+    flex: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.PortfolioDisplayRight { 
+    flex: 1;
+    height: 100%;
 }
 
 .PortfolioReadmeDisplay {
-    background-color: white;
+    background-color: rgb(119, 119, 119);
+
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+    
+    border-radius: 3px;
+    /* width: 500px;
+    height: 400px; */
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding: 20px;
+    padding-top: 10px;
+}
+    
+.PortfolioReadmeDisplaySpin {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .PortfolioMenuSide { 
-    /* outline: 2px;
-    outline-style: solid;
-    outline-color: red; */
-
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,7 +139,6 @@
     border-radius: 3px;
 
     height: 100%;
-    height: 90%;
 
     display: flex;
     flex-direction: column;

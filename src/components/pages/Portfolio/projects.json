@@ -1,17 +1,21 @@
 {
     "projects" : [
         {
-            "key": 0,
+            "key": "0",
             "title": "This Website!",
-            "github": "https://github.com/qld2/PersonalWebsiteSrc"
+            "github": "https://github.com/qld2/PersonalWebsiteSrc",
+            "readMe": "https://raw.githubusercontent.com/qld2/PersonalWebsiteSrc/main/README.md"
         },
         {
-            "key": 1,
-            "title": "Proprietary SPA"
+            "key": "1",
+            "title": "Proprietary SPA",
+            "github": "https://github.com/qld2/LifeManager",
+            "readMe": "https://raw.githubusercontent.com/qld2/LifeManager/main/README.md"
         },
         {
-            "key": 2,
-            "title": "Game Engine"
+            "key": "2",
+            "title": "Game Engine",
+            "readMe": "https://raw.githubusercontent.com/qld2/PersonalWebsiteSrc/main/README.md"
         }
     ]
 }

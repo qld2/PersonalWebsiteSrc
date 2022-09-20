@@ -128,11 +128,8 @@ class Main extends React.Component<Props, State> {
             <Route path="/Portfolio">
               <Portfolio />
             </Route>
-            <Route path="/Blog">
-              <Portfolio />
-            </Route>
-            <Route path="/Contact">
-              <Portfolio />
+            <Route path="/Documents">
+              <Blog />
             </Route>
             <Route path="">
               <Redirect to="/Introduction" />

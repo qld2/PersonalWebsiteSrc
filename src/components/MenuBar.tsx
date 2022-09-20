@@ -150,8 +150,7 @@ class MenuBar extends React.Component<Props, State> {
             >
               { this.getMenuItem('Introduction', 'Introduction', <UserOutlined />) }
               { this.getMenuItem('Portfolio', 'Portfolio', <BuildOutlined />) }
-              { this.getMenuItem('Blog', 'Blog', <AlignLeftOutlined />) }
-              { this.getMenuItem('Contact', 'Contact', <CalendarOutlined />) }
+              { this.getMenuItem('Documents', 'Documents', <AlignLeftOutlined />) }
             </Menu>
           </div>
 

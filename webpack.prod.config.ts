@@ -88,6 +88,14 @@ const config: webpack.Configuration = {
           },
         ],
       },
+      {
+        test: /\.json$/,
+        loader: 'json-loader',
+        options: {
+          esModule: true,
+        },
+        type: 'javascript/auto',
+      },
     ],
   },
   resolve: {

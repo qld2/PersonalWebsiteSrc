@@ -20,7 +20,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & {
   file: string,
-  height: number,
+  width: number,
 };
 
 type State = {
@@ -28,10 +28,6 @@ type State = {
 };
 
 class PdfViewer extends React.Component<Props, State> {
-  public static defaultProps = {
-    height: 800,
-  };
-
   constructor(props : Props) {
     super(props);
 
@@ -41,16 +37,21 @@ class PdfViewer extends React.Component<Props, State> {
   }
 
   render(): React.ReactNode {
-    const { file, height } = this.props;
+    const { file, width } = this.props;
 
     return (
 
-      <div className="PdfViewer">
-        <Document file={file}>
-          <Page pageNumber={1} height={height} />
-        </Document>
-        <div className="PdfViewerOverlay" style={{ top: -1 * height }} />
+      <div className="PdfViewerContainer">
+        <div className="PdfViewer">
+          <div className="PdfViewerOverlayAnchor">
+            <div className="PdfViewerOverlay" />
+          </div>
+          <Document file={file}>
+            <Page pageNumber={1} width={width} />
+          </Document>
+        </div>
       </div>
+
     );
   }
 }
