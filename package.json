@@ -73,6 +73,7 @@
         "less": "^4.1.3",
         "less-loader": "^11.0.0",
         "raw-loader": "^4.0.2",
+        "shx": "^0.3.4",
         "ts-node": "^10.4.0",
         "typescript": "^4.4.4",
         "url-loader": "^4.1.1",
@@ -83,7 +84,7 @@
     },
     "scripts": {
         "start": "webpack serve --config webpack.dev.config.ts",
-        "build": "webpack --config webpack.prod.config.ts",
+        "build": "webpack --config webpack.prod.config.ts && shx cp build/index.html build/404.html",
         "svg-refresh": "for %f in (src/resources/*.pnm) do potrace src/resources/%~nf.pnm -so src/resources/%~nf.svg"
     }
 }

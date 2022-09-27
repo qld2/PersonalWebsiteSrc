@@ -16,9 +16,10 @@ type Props = {
   initialPos: Point;
 
   commandName?: string;
-  messages?: string[][];
+  messages: string[][];
   active?: boolean;
   finishedCallback?: (none: void) => void;
+  repeat?: boolean;
 };
 
 type State = {
@@ -28,6 +29,7 @@ type State = {
 class CommandShell extends React.Component<Props, State> {
   public static defaultProps = {
     active: true,
+    repeat: false,
   };
 
   constructor(props : Props) {
@@ -41,7 +43,7 @@ class CommandShell extends React.Component<Props, State> {
   getAnimation = (params: { texts: string[], speed?: number, callback?: boolean }
   = { texts: [], speed: 60, callback: false }) => {
     const { counter } = this.state;
-    const { finishedCallback, fontScaleMultiplier } = this.props;
+    const { finishedCallback, fontScaleMultiplier, repeat } = this.props;
 
     const fontSize = 25 * fontScaleMultiplier;
 
@@ -97,7 +99,7 @@ class CommandShell extends React.Component<Props, State> {
     }
 
     for (let i:number = 0; i < messages.length; i += 1) {
-      if (counter > i && active) {
+      if (i < counter && active) {
         if (i === messages.length - 1) result.push(this.getAnimation({ texts: messages[i], callback: true, speed: 90 }));
         else result.push(this.getAnimation({ texts: messages[i], speed: 90 }));
         result.push(<p />);

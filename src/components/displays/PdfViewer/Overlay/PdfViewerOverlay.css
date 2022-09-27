@@ -1,0 +1,48 @@
+.PdfViewerOverlayAnchor {
+    position: relative;
+    width: 100%;
+    height: 0;
+}
+
+.PdfViewerOverlay {
+    width: 100%;
+    height: 60px;
+    top: 0px;
+    background-color: rgba(105, 105, 105, 0.4);
+    position: absolute;
+
+    z-index: 2;
+
+    transition: height 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.PdfViewerOverlayInterface {
+    width: 100%;
+    height: 100%;
+
+    transition: display 0.2s cubic-bezier(0.2, 0, 0, 1) 0s;
+
+    /* display: flex; */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.PdfViewerOverlayPageCount {
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.PdfViewerOverlayButton {
+    margin: 30px;
+}
+
+.PdfViewerOverlayInput {
+    width: 80px;
+}

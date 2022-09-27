@@ -81,9 +81,9 @@ class Introduction extends React.Component<Props, State> {
     const messagesC = [['I am a:'], ['Programmer', 'Mathematician',
       'Designer', 'Artist', 'Collaborator']];
 
-    const messagesD = [['I enjoy:'], ['Programming', 'Music',
+    const messagesD = [['I enjoy:'], ['Music',
       'Snowboarding', 'Gaming', 'Yoga', 'Puzzles', 'Socializing',
-      'Proofs', '']];
+      'Proofs', 'Programming']];
 
     return (
       <div
@@ -123,6 +123,7 @@ class Introduction extends React.Component<Props, State> {
           initialPos={whoPosition(params)}
           commandName="Who"
           messages={messagesC}
+          repeat
         />
 
         <CommandShell
@@ -132,6 +133,7 @@ class Introduction extends React.Component<Props, State> {
           initialPos={interestsPosition(params)}
           commandName="Interests"
           messages={messagesD}
+          repeat
         />
 
         {/* <InteractiveShell
