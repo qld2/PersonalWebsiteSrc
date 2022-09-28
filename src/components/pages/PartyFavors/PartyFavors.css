@@ -1,0 +1,166 @@
+.PartyFavors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color:rgba(0, 0, 0, 0.8);
+}
+
+.PartyFavorsCard {
+    /* outline: 2px;
+    outline-style: solid;
+    outline-color: red; */
+
+    display: flex;
+}
+
+.PartyFavorsDisplaySide { 
+    /* outline: 2px;
+    outline-style: solid;
+    outline-color: red; */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PartyFavorsDisplay { 
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+
+    background-color: black;
+    border-radius: 3px;
+
+    width: 100%;
+    height: 100%;
+    /* margin: 50px; */
+
+    display: flex;
+    flex-direction: column;
+}
+
+.PartyFavorsDisplayTop {
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.PartyFavorsDisplayTopTitle {
+    font-size: 3em;
+    color: aliceblue;
+    font-family:'Courier New', Courier, monospace;
+
+    line-height: 1em;
+    padding-top: 0.75em;
+}
+
+.PartyFavorsDisplayTopLink {
+    font-size: 1em;
+    color: aliceblue;
+    font-family:'Courier New', Courier, monospace;
+
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.PartyFavorsDisplayBottom {
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+ }
+
+.PartyFavorsDisplayLeft { 
+    flex: 1;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.PartyFavorsDisplayRight { 
+    flex: 1;
+    height: 100%;
+}
+
+.PartyFavorsReadmeDisplay {
+    background-color: rgb(119, 119, 119);
+
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+    
+    border-radius: 3px;
+    /* width: 500px;
+    height: 400px; */
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding: 20px;
+    padding-top: 10px;
+}
+    
+.PartyFavorsReadmeDisplaySpin {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PartyFavorsMenuSide { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.PartyFavorsMenu { 
+    outline: 2px;
+    outline-style: solid;
+    outline-color: #001529;
+
+    background-color: black;
+    border-radius: 3px;
+
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.PartyFavorsAppletMenu { 
+    min-width: 200px;
+    width: 200px;
+    background-color: transparent;
+}
+
+.PartyFavorsMenuDivider{
+    background-color: #001529;
+    width: 80%;
+    height: 2px;
+    margin: 6px;
+}
+
+.ParytFavorsMenuHeader{
+    color: aliceblue;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 2em;
+    margin-top: 6px;
+}

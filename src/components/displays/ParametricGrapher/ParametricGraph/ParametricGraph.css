@@ -1,0 +1,13 @@
+.ParametricGraphAnchor {
+    position: relative;
+    width: 100%;
+    height: 0;
+}
+
+.ParametricGraph {
+    background-color:rgb(58, 226, 43);
+}
+
+.ParametricGraphOverlay {
+    position: absolute;
+}

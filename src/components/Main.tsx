@@ -19,6 +19,7 @@ import MenuBar, { SIDEMENU_COLLAPSED_SIZE, SIDEMENU_EXPANDED_SIZE } from './Menu
 import Introduction from './pages/Introduction';
 import Blog from './pages/Blog';
 import Portfolio from './pages/Portfolio';
+import PartyFavors from './pages/PartyFavors';
 
 const mapStateToProps = (state: AppState) => ({
   menuBarWidth: state.menuBar.collapsed
@@ -130,6 +131,9 @@ class Main extends React.Component<Props, State> {
             </Route>
             <Route path="/Documents">
               <Blog />
+            </Route>
+            <Route path="/PartyFavors">
+              <PartyFavors />
             </Route>
             <Route path="">
               <Redirect to="/Introduction" />
