@@ -1,6 +1,12 @@
 .ParametricGrapher {
-    background-color: aqua;
+    background-color: rgb(92, 92, 92);
+    border-radius: 5px;
 
+    display: flex;
+    align-items: center;
+}
+
+.ParametricInterface {
     display: flex;
     justify-content: center;
     align-items: center;

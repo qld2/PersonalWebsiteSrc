@@ -10,16 +10,20 @@ import {
   Button, Input, InputNumber, Menu, Spin,
 } from 'antd';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
+import lerp from 'util/lerp';
 
 type Props = {
   width: number,
-  height: number
+  height: number,
+  margin: number,
   x: (time:number) => number,
-  y: (time:number) => number
+  y: (time:number) => number,
+  timeStart: number,
+  timeEnd: number,
 };
 
 type State = {
-  canvasElement: HTMLCanvasElement | null,
+  timeEnd: number,
 };
 
 class ParametricGraph extends React.Component<Props, State> {
@@ -27,69 +31,64 @@ class ParametricGraph extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      canvasElement: null,
+      timeEnd: props.timeEnd,
     };
   }
 
   componentDidMount(): void {
-    const canvasElement = (document.getElementById('parametricCanvas') as HTMLCanvasElement);
-    this.setState({
-      canvasElement,
-    });
+    this.drawGraph(500);
+  }
 
+  static getDerivedStateFromProps({ timeEnd }: Props): State {
+    return { timeEnd };
+  }
+
+  getSnapshotBeforeUpdate(prevProps: Readonly<Props>, prevState: Readonly<State>) {
+    this.drawGraph(500);
+  }
+
+  drawGraph = (intervals: number) => {
+    const {
+      x, y, width, height, timeStart,
+    } = this.props;
+
+    console.log(x, y);
+
+    const { timeEnd } = this.state;
+
+    const canvasElement = (document.getElementById('parametricCanvas') as HTMLCanvasElement);
     const canvasContext = canvasElement?.getContext('2d');
 
-    const { width, height } = this.props;
-    const { x, y } = this.props;
-
     if (canvasContext) {
+      canvasContext.clearRect(0, 0, width, height);
+      canvasContext.beginPath();
       canvasContext.moveTo(0, width / 2);
       canvasContext.lineTo(height, width / 2);
       canvasContext.moveTo(height / 2, 0);
       canvasContext.lineTo(height / 2, width);
 
-      const intervals = 2;
+      for (let i = 0; i < intervals - 1; i += 1) {
+        const it0 = i / (intervals - 1);
+        const it1 = (i + 1) / (intervals - 1);
+        // const t0 = Math.max(it0, timeStart);
+        // const t1 = Math.min(it1, timeEnd);
 
-      for (let i = 0; i < intervals; i += 1) {
-        const t0 = i / (intervals - 1);
-        const t1 = (i + 1) / (intervals - 1);
-
-        canvasContext.moveTo(x(t0) + width / 2, y(t0) + height / 2);
-        canvasContext.lineTo(x(t1) + width / 2, y(t1) + height / 2);
+        if (it0 > timeStart && it1 < timeEnd) {
+          canvasContext.moveTo(x(it0) + width / 2, y(it0) + height / 2);
+          canvasContext.lineTo(x(it1) + width / 2, y(it1) + height / 2);
+        }
       }
       canvasContext.stroke();
-    }
-
-    // this.drawGraph(4);
-  }
-
-  drawGraph = (intervals: number) => {
-    const { x, y } = this.props;
-    const { canvasElement } = this.state;
-
-    for (let i = 0; i < intervals; i += 1) {
-      const t0 = i / (intervals - 1);
-      const t1 = (i + 1) / (intervals - 1);
-
-      const canvasContext = canvasElement?.getContext('2d');
-      console.log(canvasElement);
-
-      if (canvasContext) {
-        console.log(t0, t1);
-        canvasContext.moveTo(x(t0), y(t0));
-        canvasContext.lineTo(x(t1), y(t1));
-        canvasContext.stroke();
-      }
     }
   };
 
   render(): React.ReactNode {
-    const { width, height } = this.props;
+    const { width, height, margin } = this.props;
 
     return (
       <div
         className="ParametricGraph"
-        style={{ width, height }}
+        style={{ width, height, margin }}
       >
         {/* <div className="ParametricGraphAnchor">
           <div
